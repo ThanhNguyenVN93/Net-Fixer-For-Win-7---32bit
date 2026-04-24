@@ -1,0 +1,32 @@
+# .gitattributes
+
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Source code
+*.cs text diff=csharp
+*.csproj text
+*.sln text
+*.config text
+*.resx text
+*.manifest text
+
+# Documentation
+*.md text
+*.txt text
+
+# Images
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ico binary
+
+# Archives
+*.zip binary
+*.exe binary
+*.dll binary
+
+# Line endings
+*.cs text eol=crlf
+*.csproj text eol=crlf
+*.sln text eol=crlf

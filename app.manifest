@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1"
+ xmlns:asmv1="urn:schemas-microsoft-com:asm.v1"
+ xmlns:asmv2="urn:schemas-microsoft-com:asm.v2"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 http://schemas.microsoft.com/developer/schemas/manifestTypes/asm.v1/asmv1.xsd">
+  <assemblyIdentity version="1.0.0.0" processorArchitecture="x86" name="frmnetx86" type="win32"/>
+  <description>Network Driver Installer (x86)</description>
+
+  <!-- Require Administrator Privileges -->
+  <asmv2:trustInfo xmlns:asmv2="urn:schemas-microsoft-com:asm.v2">
+    <security>
+      <requestedPrivileges>
+        <requestedExecutionLevel level="requireAdministrator" uiAccess="false"/>
+      </requestedPrivileges>
+    </security>
+  </asmv2:trustInfo>
+
+  <!-- Enable Visual Styles -->
+  <asmv3:application xmlns:asmv3="urn:schemas-microsoft-com:asm.v3">
+    <asmv3:windowsSettings xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">
+      <dpiAware>true</dpiAware>
+    </asmv3:windowsSettings>
+  </asmv3:application>
+
+  <!-- Assembly Dependencies -->
+  <dependency>
+    <dependentAssembly>
+      <assemblyIdentity type="win32" name="Microsoft.Windows.Common-Controls" version="6.0.0.0" processorArchitecture="x86" publicKeyToken="6595b64144ccf1df" language="*"/>
+    </dependentAssembly>
+  </dependency>
+</asmv1:assembly>

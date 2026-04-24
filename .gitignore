@@ -1,0 +1,22 @@
+# Build artifacts
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+
+# NuGet
+[Pp]ackages/
+*.nupkg
+
+# Temp files
+*.tmp
+*.log
+
+# macOS
+.DS_Store
