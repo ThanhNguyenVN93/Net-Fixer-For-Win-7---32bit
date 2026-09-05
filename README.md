@@ -4,77 +4,153 @@
 [![Platform](https://img.shields.io/badge/platform-Windows%20x86-lightgrey.svg)](https://www.microsoft.com/windows)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-A professional single-file network driver installer for Windows 7 32-bit systems with automated .NET Framework installation, embedded drivers, and intelligent hardware detection.
+A professional network driver installer for 32-bit Windows systems with automated LAN/WiFi driver installation, intelligent hardware detection, and comprehensive error handling.
 
-## ✨ Key Features
+## ✨ Features
 
-### 🎯 Single-File Deployment
-- **One EXE file** - No external dependencies
-- **70 MB total** - Drivers and .NET installer embedded
-- **Portable** - Copy and run from anywhere
-- **Offline capable** - Works without internet
+- 🚀 **One-Click Installation** - Automated LAN and WiFi driver installation
+- 💻 **Non-Blocking UI** - Responsive interface using BackgroundWorker
+- 📊 **Real-Time Progress** - 4-phase progress tracking (10%-100%)
+- 🔍 **Hardware Detection** - Automatic vendor identification (Realtek, Intel, Atheros, Broadcom)
+- 💾 **Disk Space Check** - Validates 500MB free space before installation
+- 🔄 **Force Update** - Driver replacement support with /force parameter
+- 🔧 **Device Rescan** - Multiple hardware rescan methods
+- 🎨 **Color-Coded Logging** - Terminal-style log with color indicators
+- 🛡️ **Admin Enforcement** - Automatic administrator privileges via manifest
 
-### 🚀 Auto .NET Installation
-- Detects .NET Framework 4.5.2+ automatically
-- Embeds .NET installer (66.8 MB)
-- Auto-installs if missing
-- Auto-restarts and resumes
-- Clean registry cleanup after completion
+## 🖥️ System Requirements
 
-### 💻 Smart Driver Installation
-- **LAN drivers** - Realtek, Intel, Atheros, Broadcom
-- **WiFi drivers** - Embedded in single EXE
-- **Automatic extraction** - To temp folder during install
-- **Auto cleanup** - No traces left after installation
-- **Hardware detection** - Identifies network adapters
-- **Vendor detection** - Recognizes manufacturer
+- **OS**: Windows 7 SP1 or later (32-bit / x86 only)
+- **.NET Framework**: 4.5.2 or higher
+- **Disk Space**: 500MB free on C: drive
+- **Privileges**: Administrator rights (auto-enforced)
 
-## 📦 What's Inside
+## 📦 Installation
 
-```
-Net Fixer For Win 7 - 32bit.exe (70.21 MB)
-├── Application Code (~3 MB)
-├── LAN Drivers - lanx86.zip (~0.7 MB)
-├── WiFi Drivers - wifix86.zip (~1.5 MB)
-└── .NET Framework 4.5.2 Installer (~66.8 MB)
-```
+### Pre-built Release
+1. Download the latest release from [Releases](../../releases)
+2. **Single file** - Just download `Net Fixer For Win 7 - 32bit.exe`
+3. Run the EXE (UAC prompt will appear for Administrator rights)
+4. That's it! Driver packages are embedded inside the EXE
 
-## 💻 System Requirements
-
-- **OS:** Windows 7 SP1 (32-bit only)
-- **.NET:** 4.5.2+ (auto-installed if missing)
-- **Privileges:** Administrator (auto-enforced)
-- **Disk Space:** 500 MB free on C:\
-
-## 🚀 Quick Start
-
-1. Download the EXE from [Releases](../../releases)
-2. Run the EXE (UAC prompt will appear)
-3. First run: Auto-installs .NET if missing → Restart → Auto-resume
-4. Click **Install LAN** → Wait → Click **Install Wi-Fi**
-5. Done!
-
-## 🔧 Building from Source
-
+### Build from Source
 ```bash
+# Clone repository
 git clone https://github.com/yourusername/frmnetx86.git
 cd frmnetx86
-msbuild /t:restore
-msbuild /p:Configuration=Release /p:Platform=x86
+
+# Restore NuGet packages
+nuget restore
+
+# Build with Visual Studio 2026 or MSBuild
+msbuild frmnetx86.csproj /p:Configuration=Release /p:Platform=x86
 ```
+
+**Note**: Driver packages (`lanx86.zip`, `wifix86.zip`) are embedded as resources in the EXE.
+
+## 🚀 Usage
+
+1. **Launch Application** - Run as Administrator (enforced automatically)
+2. **Install LAN Driver** - Click "Install LAN" button
+3. **Wait for Completion** - Progress bar shows 10% → 100%
+4. **Install WiFi Driver** - Click "Install Wi-Fi" button (unlocked after LAN)
+5. **Verify Installation** - Click "Open Device Manager" to confirm
+
+### Screenshots
+
+```
+┌─────────────────────────────────────────────┐
+│ Network Driver Installer (x86)              │
+├─────────────────────────────────────────────┤
+│ System Information                          │
+│   Windows 10 - 32-bit                       │
+├─────────────────────────────────────────────┤
+│ Driver Installation                         │
+│  [Install LAN]  Status  [Install Wi-Fi]     │
+│                                             │
+│  Progress & Log                             │
+│  ████████████████░░░░ 80%                   │
+│  > Step 3/4: Rescanning hardware...         │
+│  > ✓ Installation complete                  │
+└─────────────────────────────────────────────┘
+```
+
+## 📋 Features Breakdown
+
+### 🎯 Core Functionality
+- **Automated Extraction** - Unzips driver packages to Desktop
+- **PnPUtil Integration** - Uses Windows PnPUtil with /install /subdirs /force
+- **Sequential Lock** - WiFi installation requires LAN completion
+- **Cleanup** - Automatic removal of temporary files
+
+### 🛡️ Safety Features
+- **Disk Space Check** - Validates 500MB free before extraction
+- **Exit Code Handling** - Recognizes success (0), restart required (3010)
+- **Error Recovery** - Graceful fallback strategies
+
+### 🎨 User Interface
+- **Color-Coded Logs**
+  - ⚪ White - System information
+  - 🟡 Yellow - Process/Activity
+  - 🟢 Lime - Success
+  - 🟠 Orange - Warning (restart needed)
+  - 🔴 Red - Critical error
+- **Progress Phases**
+  - 10-20%: Extraction
+  - 30-60%: Installation
+  - 70-90%: Rescan & Cleanup
+  - 100%: Complete
+
+## 🔧 Configuration
+
+### Driver Packages
+Place driver ZIP files in the application directory:
+- `lanx86.zip` - LAN driver package
+- `wifix86.zip` - WiFi driver package
+
+### Supported Hardware Vendors
+- **Realtek** (VEN_10EC)
+- **Intel** (VEN_8086)
+- **Atheros** (VEN_168C)
+- **Broadcom** (VEN_14E4)
+
+## 📖 Documentation
+
+- [README.md](README.md) - Quick start guide (this file)
+- [FINAL_SPEC.md](FINAL_SPEC.md) - Complete technical specification
+- [FINAL_ENHANCEMENTS.md](FINAL_ENHANCEMENTS.md) - V5.0 safety features
+- [PROJECT_COMPLETION.md](PROJECT_COMPLETION.md) - Project completion report
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## 📄 License
 
-MIT License - Copyright (c) 2026 Network Driver Installer Contributors
-
-See [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
-- Microsoft .NET Framework team
-- Windows Driver Kit (WDK)
-- Community contributors
+- Thanks to all contributors
+- Built with .NET Framework 4.5.2
+- Powered by PnPUtil (Windows Driver Management)
+
+## 📧 Contact
+
+- **Developer**: [Your Name]
+- **Email**: your.email@example.com
+- **Website**: [https://anhdv.com](https://anhdv.com)
+
+## ⚠️ Disclaimer
+
+This tool is provided as-is without warranty. Always backup your system before installing drivers.
 
 ---
 
-**Made with ❤️ for Windows 7 (x86)**
+**Made with ❤️ for Windows x86 systems**
